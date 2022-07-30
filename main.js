@@ -24,3 +24,20 @@ function loadImgs() {
   spaceshipImg = new Image();
   spaceshipImg.src = "images/SpaceShip.png";
 }
+
+//Rendering Imgs
+function renderImgs() {
+  ctx.drawImage(backGroundImg, 0, 0, canvas.width, canvas.height);
+}
+
+//Rendering Imgs continuously
+function main(){
+  renderImgs();
+  requestAnimationFrame(main)
+
+}
+
+
+//Calling functions
+loadImgs();
+renderImgs();
