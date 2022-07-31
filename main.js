@@ -5,9 +5,13 @@ canvas.width = 400;
 canvas.height = 700;
 document.body.appendChild(canvas);
 
-//Load Images
 let backGroundImg, bulletImg, GameOverImg, monsterImg, spaceshipImg;
 
+//Coordinations of SpaceShip
+let SpaceShipX = canvas.width / 2 - 32;
+let SpaceShipY = canvas.height - 64;
+
+//Load Images
 function loadImgs() {
   backGroundImg = new Image();
   backGroundImg.src = "images/SpaceImg.png";
@@ -28,16 +32,16 @@ function loadImgs() {
 //Rendering Imgs
 function renderImgs() {
   ctx.drawImage(backGroundImg, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(spaceshipImg, SpaceShipX, SpaceShipY);
 }
 
 //Rendering Imgs continuously
-function main(){
+function main() {
   renderImgs();
   requestAnimationFrame(main)
-
 }
 
 
 //Calling functions
 loadImgs();
-renderImgs();
+main();
