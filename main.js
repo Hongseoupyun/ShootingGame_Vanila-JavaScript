@@ -53,6 +53,19 @@ function updateSpaceshipCoordination() {
     SpaceShipY -= 3;
   }
   if (keysdown.ArrowDown) SpaceShipY += 3;
+
+  if (SpaceShipX <= 0) {
+    SpaceShipX = 0;
+  }
+  if (SpaceShipX >= canvas.width - 64) {
+    SpaceShipX = canvas.width - 64;
+  }
+  if(SpaceShipY>=canvas.height-64){
+    SpaceShipY = canvas.height-64
+  }
+  if(SpaceShipY<=0){
+    SpaceShipY=0;
+  }
 }
 
 //Rendering Imgs
