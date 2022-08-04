@@ -2,7 +2,7 @@
 let canvas = document.createElement("canvas");
 let ctx = canvas.getContext("2d");
 canvas.width = 400;
-canvas.height = 700;
+canvas.height = 650;
 document.body.appendChild(canvas);
 
 let backGroundImg, bulletImg, GameOverImg, monsterImg, spaceshipImg;
@@ -28,6 +28,20 @@ function loadImgs() {
   spaceshipImg = new Image();
   spaceshipImg.src = "images/SpaceShip.png";
 }
+let keysdown={
+  
+}
+function setupKeyboardListener (){
+  document.addEventListener("keydown",(event)=>{
+    keysdown[event.key]=true
+    console.log("keypressed:", event.key)
+    console.log(keysdown)
+  })
+  document.addEventListener("keyup",(event)=>{
+    delete keysdown[event.key]
+    console.log(keysdown)
+  })
+}
 
 //Rendering Imgs
 function renderImgs() {
@@ -45,3 +59,4 @@ function main() {
 //Calling functions
 loadImgs();
 main();
+setupKeyboardListener();
