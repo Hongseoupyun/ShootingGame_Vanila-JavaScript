@@ -28,19 +28,31 @@ function loadImgs() {
   spaceshipImg = new Image();
   spaceshipImg.src = "images/SpaceShip.png";
 }
-let keysdown={
-  
+//Keyboard controlls
+let keysdown = {};
+function setupKeyboardListener() {
+  document.addEventListener("keydown", (event) => {
+    keysdown[event.key] = true;
+    console.log("keypressed:", event.key);
+    console.log(keysdown);
+  });
+  document.addEventListener("keyup", (event) => {
+    delete keysdown[event.key];
+    console.log(keysdown);
+  });
 }
-function setupKeyboardListener (){
-  document.addEventListener("keydown",(event)=>{
-    keysdown[event.key]=true
-    console.log("keypressed:", event.key)
-    console.log(keysdown)
-  })
-  document.addEventListener("keyup",(event)=>{
-    delete keysdown[event.key]
-    console.log(keysdown)
-  })
+
+function updateSpaceshipCoordination() {
+  if (keysdown.ArrowRight) {
+    SpaceShipX += 5;
+  }
+  if (keysdown.ArrowLeft) {
+    SpaceShipX -= 5;
+  }
+  if (keysdown.ArrowUp) {
+    SpaceShipY -= 3;
+  }
+  if (keysdown.ArrowDown) SpaceShipY += 3;
 }
 
 //Rendering Imgs
@@ -51,10 +63,10 @@ function renderImgs() {
 
 //Rendering Imgs continuously
 function main() {
+  updateSpaceshipCoordination();
   renderImgs();
-  requestAnimationFrame(main)
+  requestAnimationFrame(main);
 }
-
 
 //Calling functions
 loadImgs();
