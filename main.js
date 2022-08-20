@@ -17,7 +17,7 @@ function Bullet() {
   this.x = 0;
   this.y = 0;
   //method
-  this.init = function () {
+  this.fire = function () {
     this.x = SpaceShipX + 20;
     this.y = SpaceShipY;
 
@@ -65,7 +65,7 @@ function setupKeyboardListener() {
 function createBullet() {
   console.log("bullet making");
   let b = new Bullet();
-  b.init();
+  b.fire();
 }
 
 function updateCoordination() {
