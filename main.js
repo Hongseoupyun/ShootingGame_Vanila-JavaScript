@@ -11,6 +11,23 @@ let backGroundImg, bulletImg, GameOverImg, monsterImg, spaceshipImg;
 let SpaceShipX = canvas.width / 2 - 32;
 let SpaceShipY = canvas.height - 64;
 
+let bulletArray = [];
+
+function Bullet() {
+  this.x = 0;
+  this.y = 0;
+  //method
+  this.init = function () {
+    this.x = SpaceShipX + 20;
+    this.y = SpaceShipY;
+
+    bulletArray.push(this);
+  };
+  this.update = function () {
+    this.y -= 5;
+  };
+}
+
 //Load Images
 function loadImgs() {
   backGroundImg = new Image();
@@ -39,10 +56,19 @@ function setupKeyboardListener() {
   document.addEventListener("keyup", (event) => {
     delete keysdown[event.key];
     console.log(keysdown);
+    if (event.key === " ") {
+      createBullet();
+    }
   });
 }
 
-function updateSpaceshipCoordination() {
+function createBullet() {
+  console.log("bullet making");
+  let b = new Bullet();
+  b.init();
+}
+
+function updateCoordination() {
   if (keysdown.ArrowRight) {
     SpaceShipX += 5;
   }
@@ -60,23 +86,36 @@ function updateSpaceshipCoordination() {
   if (SpaceShipX >= canvas.width - 64) {
     SpaceShipX = canvas.width - 64;
   }
-  if(SpaceShipY>=canvas.height-64){
-    SpaceShipY = canvas.height-64
+  if (SpaceShipY >= canvas.height - 64) {
+    SpaceShipY = canvas.height - 64;
   }
-  if(SpaceShipY<=0){
-    SpaceShipY=0;
+  if (SpaceShipY <= 0) {
+    SpaceShipY = 0;
+  }
+  for (let i = 0; i < bulletArray.length; i++) {
+    bulletArray[i].update();
   }
 }
+// bullet logic
+// 1.if you press spacebar, bullet will generate
+// 2.the coordinations of bullet is gonna be coordinations of spaceship when spacebar is pressed
+// 3.if the bullets is generated , the y coordination will keep decreasing and x coordination will remain same
+// 4.the bullets data will store in an array
+// 5.render bullets with the array
 
 //Rendering Imgs
 function renderImgs() {
   ctx.drawImage(backGroundImg, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(spaceshipImg, SpaceShipX, SpaceShipY);
+
+  for (let i = 0; i < bulletArray.length; i++) {
+    ctx.drawImage(bulletImg, bulletArray[i].x, bulletArray[i].y);
+  }
 }
 
 //Rendering Imgs continuously
 function main() {
-  updateSpaceshipCoordination();
+  updateCoordination();
   renderImgs();
   requestAnimationFrame(main);
 }
