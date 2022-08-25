@@ -39,7 +39,7 @@ function Bullet() {
         this.x >= monsterArray[i].x &&
         this.x <= monsterArray[i].x + 50
       ) {
-        score++;
+        score+=1;
         this.alive = false;
         monsterArray.splice(i, 1);
       }
