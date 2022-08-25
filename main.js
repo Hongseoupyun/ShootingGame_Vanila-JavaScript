@@ -6,12 +6,14 @@ canvas.height = 650;
 document.body.appendChild(canvas);
 
 let backGroundImg, bulletImg, GameOverImg, monsterImg, spaceshipImg;
+let gameOver = false;
 
 //Coordinations of SpaceShip
 let SpaceShipX = canvas.width / 2 - 32;
 let SpaceShipY = canvas.height - 64;
 
 let bulletArray = [];
+let monsterArray = [];
 
 function Bullet() {
   this.x = 0;
@@ -27,6 +29,31 @@ function Bullet() {
     this.y -= 5;
   };
 }
+function generateRandomNumver(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function Monster() {
+  this.x = 0;
+  this.y = 0;
+  //method
+  this.init = function () {
+    this.x = generateRandomNumver(0, canvas.width - 50)
+    this.y = 0
+
+    monsterArray.push(this)
+  };
+  this.update = function () {
+    this.y += 0.9
+    //gameover logic
+    if (this.y > canvas.height - 50) {
+      gameOver = true;
+      console.log("GAME OVER")
+    } 
+  }
+}
+
+
 
 //Load Images
 function loadImgs() {
@@ -68,6 +95,13 @@ function createBullet() {
   b.fire();
 }
 
+function createMonster() {
+  setInterval(() => {
+    let m = new Monster();
+    m.init();
+  }, 1500);
+}
+
 function updateCoordination() {
   if (keysdown.ArrowRight) {
     SpaceShipX += 5;
@@ -95,6 +129,9 @@ function updateCoordination() {
   for (let i = 0; i < bulletArray.length; i++) {
     bulletArray[i].update();
   }
+  for (let i = 0; i < monsterArray.length; i++) {
+    monsterArray[i].update();
+  }
 }
 // bullet logic
 // 1.if you press spacebar, bullet will generate
@@ -111,16 +148,24 @@ function renderImgs() {
   for (let i = 0; i < bulletArray.length; i++) {
     ctx.drawImage(bulletImg, bulletArray[i].x, bulletArray[i].y);
   }
+  for (let i = 0; i < monsterArray.length; i++) {
+    ctx.drawImage(monsterImg, monsterArray[i].x, monsterArray[i].y)
+  }
 }
 
 //Rendering Imgs continuously
 function main() {
-  updateCoordination();
-  renderImgs();
-  requestAnimationFrame(main);
+  if(!gameOver){
+    updateCoordination();
+    renderImgs();
+    requestAnimationFrame(main);
+  } else {
+    ctx.drawImage(GameOverImg,10,100,380,300)
+  }
 }
 
 //Calling functions
+createMonster();
 loadImgs();
 main();
 setupKeyboardListener();
