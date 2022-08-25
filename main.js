@@ -68,14 +68,7 @@ function Monster() {
       console.log("GAME OVER");
     }
   };
-  // this.stageUp = function (){
-  //   this.y += 0.9
-  //   //gameover logic
-  //   if (this.y > canvas.height - 50) {
-  //     gameOver = true;
-  //     console.log("GAME OVER")
-  //   }
-  // }
+  
 }
 
 //Load Images
